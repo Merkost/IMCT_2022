@@ -15,13 +15,21 @@
 """
 
 
+def func(D, T, v, w):
+    try:
+        r = (D - w * T) / (v - w) * v
+        return r
+    except:
+        return 0
+
+
 with open("input.txt", "r") as file:
     lines = file.read().splitlines()
 
 dt = list(map(lambda x: float(x), lines[0].split(" ")))
 vv = list(map(lambda x: float(x), lines[1].split(" ")))
 vv.sort()
-ww = list(map(lambda x: float(x), lines[0].split(" ")))
+ww = list(map(lambda x: float(x), lines[2].split(" ")))
 ww.sort()
 
 d = dt[0]
@@ -31,11 +39,21 @@ v2 = vv[1]
 w1 = ww[0]
 w2 = ww[1]
 
-result = 0.0
-if (t*w1 == d):
-    result = 0.0
-elif (d%v2==w2):
-    result = d//v2
+print(f"d = {d}, t = {t}, "
+      f"v1 = {v1}, v1 = {v2}, "
+      f"w1 = {w1}, w2 = {w2}")
+
+results = [func(d, t, v1, w1), func(d, t, v1, w1), func(d, t, v2, w1), func(d, t, v2, w2)]
+
+# result1 = func(d, t, v1, w1)
+# result2 = func(d, t, v1, w2)
+# result3 = func(d, t, v2, w1)
+# result4 = func(d, t, v2, w2)
+
+result = max(results)
+while(result > d):
+    results.remove(result)
+    result = max(results)
 
 with open("output.txt", "w") as f:
     f.write(str(result))
