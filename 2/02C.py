@@ -39,21 +39,18 @@ v2 = vv[1]
 w1 = ww[0]
 w2 = ww[1]
 
-print(f"d = {d}, t = {t}, "
-      f"v1 = {v1}, v1 = {v2}, "
-      f"w1 = {w1}, w2 = {w2}")
+# print(f"d = {d}, t = {t}, "
+#       f"v1 = {v1}, v1 = {v2}, "
+#       f"w1 = {w1}, w2 = {w2}")
 
 results = [func(d, t, v1, w1), func(d, t, v1, w1), func(d, t, v2, w1), func(d, t, v2, w2)]
-
-# result1 = func(d, t, v1, w1)
-# result2 = func(d, t, v1, w2)
-# result3 = func(d, t, v2, w1)
-# result4 = func(d, t, v2, w2)
 
 result = max(results)
 while(result > d):
     results.remove(result)
     result = max(results)
 
+result = abs(result)
+
 with open("output.txt", "w") as f:
-    f.write(str(result))
+    f.write(str(round(result, 3)))
