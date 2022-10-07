@@ -9,29 +9,41 @@
 
 First string
 Second string
-third string
-4 string
-5 string
+Second string
+First string
+First string
 
 """
 import sys
 
-lis = list(map(lambda x: x.rstrip("\n"), sys.stdin.readlines()))
-di = dict(map(lambda x: {x: [i] if x % 2 == 0 else False} for i, x in enumerate(lis)))
-print(dict)
-backwardList = lis[-1::-1]
-result = ["-1"]
-listLen = len(lis)
-if len(lis) > 1:
-    for i in range(1, listLen):
-        try:
-            # print(f'word: {word}, min i: {len(lis) - i}')
-            result.append(listLen - 1 - backwardList.index(lis[i], listLen - i))
-        except:
-            result.append("-1")
-print(*result)
+dic = {}
 
+for i, v in enumerate(map(lambda x: x.rstrip("\n"), sys.stdin.readlines())):
+    value = dic.get(v)
+    if value is None:
+        print(-1)
+        dic[v] = i
+    else:
+        print(value)
+        dic[v] = i
 
+#
+# lis = list(map(lambda x: x.rstrip("\n"), sys.stdin.readlines()))
+# di = dict(map(lambda x: {x: [i] if x % 2 == 0 else False} for i, x in enumerate(lis)))
+# print(dict)
+# backwardList = lis[-1::-1]
+# result = ["-1"]
+# listLen = len(lis)
+# if len(lis) > 1:
+#     for i in range(1, listLen):
+#         try:
+#             # print(f'word: {word}, min i: {len(lis) - i}')
+#             result.append(listLen - 1 - backwardList.index(lis[i], listLen - i))
+#         except:
+#             result.append("-1")
+# print(*result)
+#
+#
 # import sys
 #
 # lis = list(map(lambda x: x.rstrip("\n"), sys.stdin.readlines()))

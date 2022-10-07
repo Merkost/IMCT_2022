@@ -1,4 +1,11 @@
-2
+8
 M8103	Sidorov Sidor
 M8888	Petrov Petr
-M8103	Ivanov Ivan
+M8203	Ivanov Ivan
+Z8103	Avorob Sidor
+A8103	Sidorov Sidor
+Z8888	Setrov Petr
+B8102	Bvanov Ivan
+A8103	Vvorob Sidor
+
+

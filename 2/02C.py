@@ -13,14 +13,13 @@
 с точностью не менее 3 десятичных знаков.
 Входные данные таковы, что решение всегда существует.
 """
-
+# print(f"d = {d}, t = {t}, "
+#       f"v1 = {v1}, v1 = {v2}, "
+#       f"w1 = {w1}, w2 = {w2}")
 
 def func(D, T, v, w):
-    try:
-        r = (D - w * T) / (v - w) * v
-        return r
-    except:
-        return 0
+    if (v == w): return 0
+    else: return ((D - w * T) / (v - w)) * v
 
 
 with open("input.txt", "r") as file:
@@ -28,9 +27,7 @@ with open("input.txt", "r") as file:
 
 dt = list(map(lambda x: float(x), lines[0].split(" ")))
 vv = list(map(lambda x: float(x), lines[1].split(" ")))
-vv.sort()
 ww = list(map(lambda x: float(x), lines[2].split(" ")))
-ww.sort()
 
 d = dt[0]
 t = dt[1]
@@ -39,11 +36,10 @@ v2 = vv[1]
 w1 = ww[0]
 w2 = ww[1]
 
-# print(f"d = {d}, t = {t}, "
-#       f"v1 = {v1}, v1 = {v2}, "
-#       f"w1 = {w1}, w2 = {w2}")
-
-results = [func(d, t, v1, w1), func(d, t, v1, w1), func(d, t, v2, w1), func(d, t, v2, w2)]
+results = [func(d, t, v1, w1),
+           func(d, t, v1, w2),
+           func(d, t, v2, w1),
+           func(d, t, v2, w2)]
 
 result = max(results)
 while(result > d):
@@ -53,4 +49,4 @@ while(result > d):
 result = abs(result)
 
 with open("output.txt", "w") as f:
-    f.write(str(round(result, 3)))
+    f.write(str(result))
