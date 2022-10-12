@@ -1,41 +1,22 @@
-with open("input.txt", "r") as file:
-    lines = file.read().splitlines()
+def counter_decorator(func):
+    def wrapper(*args, **kwargs):
+        wrapper.calls += 1
+        print(f"Function calls count: {wrapper.calls}")
+        return func(*args, **kwargs)
 
-timeInRoute = [0, 0]
-timeDeparture = [0, 0]
-
-try:
-    timeInRoute[0] = int(lines[1].split()[0])
-except:
-    None
-
-try:
-    timeInRoute[1] = int(lines[1].split()[1])
-except:
-    None
-
-try:
-    timeDeparture[0] = int(lines[0].split()[0])
-except:
-    None
-
-try:
-    timeDeparture[1] = int(lines[0].split()[1])
-except:
-    None
+    wrapper.calls = 0
+    return wrapper
 
 
-resultHours = 0
-resultHours += timeDeparture[0]
-resultHours += timeInRoute[0]
+def projection_decorator(func):
+    def wrapper(x, y, z):
+        func(3 * x - 7 * y + 15 * z + 18)
+    return wrapper
 
 
-resultMinutes = timeDeparture[1] + timeInRoute[1]
+@projection_decorator
+def calc(x: int):
+    print(x * x)
 
-resultHours %= 24
-if resultMinutes > 59:
-    resultHours += 1
-    resultMinutes -= 60
 
-with open("output.txt", "w") as result:
-    result.write(str(resultHours) + " " + str(resultMinutes))
+calc(1, 2, 3)
