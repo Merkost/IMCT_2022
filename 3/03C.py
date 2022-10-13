@@ -60,9 +60,7 @@ N строк с именами. Имена состоят из латински�
 
 
 dic = {}
-result = []
 resultLc = []
-
 
 def getNewName(initialLower, iteration):
     newNameLower = initialLower + str(iteration)
@@ -72,13 +70,13 @@ def getNewName(initialLower, iteration):
     return newNameLower, iteration
 
 
-def addNewName(inputLower, name, nameLower, namesToDic):
-    result.append(name)
+def addNewName(inputLower, name, nameLower, number):
+    print(name, file = f)
     resultLc.append(nameLower)
-    dic[inputLower] = namesToDic
+    dic[inputLower] = number
 
 
-with open("input.txt", "r") as file:
+with open("input.txt", "r") as file, open("output.txt", "w") as f:
     count = int(file.readline())
     for i in range(count):
         input = file.readline().strip()
@@ -90,15 +88,11 @@ with open("input.txt", "r") as file:
                 nameLower, iterat = getNewName(inputLower, 1)
                 name = input + str(iterat)
 
-                addNewName(inputLower, name, nameLower, [name])
+                addNewName(inputLower, name, nameLower, iterat + 1)
             else:
-                addNewName(inputLower, input, inputLower, [input])
+                addNewName(inputLower, input, inputLower, 1)
         else:
-            nameLower, iterat = getNewName(inputLower, len(value))
+            nameLower, iterat = getNewName(inputLower, value)
             name = input + str(iterat)
 
-            value.append(input)
-            addNewName(inputLower, name, nameLower, value)
-
-with open("output.txt", "w") as f:
-    f.write("\n".join(result))
+            addNewName(inputLower, name, nameLower, iterat + 1)
