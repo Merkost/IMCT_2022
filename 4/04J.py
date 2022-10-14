@@ -24,18 +24,15 @@
 #####
 ##...
 #...#
+
+
+.#.
+.#.
+.#.
+
 """
 import sys
 from copy import deepcopy
-
-
-def flatten(m):
-    flat_list = []
-    for sublist in m:
-        for item in sublist:
-            flat_list.append(item)
-    return flat_list
-
 
 matrix = list(map(lambda x: [lst for lst in x.rstrip("\n")], sys.stdin.readlines()))
 resultMatrix = deepcopy(matrix)
@@ -73,12 +70,10 @@ def checkPoint(i, j):
 def checkNeighboursFor(i, j, neighbours):
     aliveNeighbours = neighbours.count("#")
 
-    if matrix[i][j] == ".":
-        if aliveNeighbours == 3:
-            resultMatrix[i][j] = "#"
-    else:
-        if aliveNeighbours not in (2, 3):
-            resultMatrix[i][j] = "."
+    if matrix[i][j] == "." and aliveNeighbours == 3:
+        resultMatrix[i][j] = "#"
+    elif matrix[i][j] == "#" and aliveNeighbours not in (2, 3):
+        resultMatrix[i][j] = "."
 
 
 def checkCorners():
@@ -86,14 +81,13 @@ def checkCorners():
     rightDownNeighbours.append(matrix[matrixRowEndIndex][matrixColumnEndIndex - 1])
     rightDownNeighbours.append(matrix[matrixRowEndIndex - 1][matrixColumnEndIndex])
     rightDownNeighbours.append(matrix[matrixRowEndIndex - 1][matrixColumnEndIndex - 1])
-    # From the other side of the matrix
 
     rightDownNeighbours.append(matrix[matrixRowEndIndex][0])
     rightDownNeighbours.append(matrix[matrixRowEndIndex - 1][0])
 
     rightDownNeighbours.append(matrix[0][0])
     rightDownNeighbours.append(matrix[0][matrixColumnEndIndex])
-    rightDownNeighbours.append(matrix[0][matrixColumnEndIndex - 1])
+    rightDownNeighbours.append(matrix[0][matrixColumnEndIndex -1])
 
     checkNeighboursFor(matrixRowEndIndex, matrixColumnEndIndex, rightDownNeighbours)
 
@@ -101,7 +95,7 @@ def checkCorners():
     rightUpNeighbours.append(matrix[0][matrixColumnEndIndex - 1])
     rightUpNeighbours.append(matrix[1][matrixColumnEndIndex - 1])
     rightUpNeighbours.append(matrix[1][matrixColumnEndIndex])
-    # From the other side of the matrix
+
     rightUpNeighbours.append(matrix[0][0])
     rightUpNeighbours.append(matrix[1][0])
 
@@ -241,7 +235,8 @@ def checkHorizontal():
 def checkVertical():
     checkNeighboursFor(0, 0, [matrix[0][0], matrix[0][0],
                               matrix[1][0], matrix[1][0], matrix[1][0],
-                              matrix[matrixRowEndIndex][0], matrix[matrixRowEndIndex][0], matrix[matrixRowEndIndex][0],])
+                              matrix[matrixRowEndIndex][0], matrix[matrixRowEndIndex][0],
+                              matrix[matrixRowEndIndex][0], ])
     checkNeighboursFor(matrixRowEndIndex, 0, [matrix[matrixRowEndIndex - 1][0]])
 
     # index out of range warning
@@ -253,9 +248,9 @@ def checkVertical():
 
 if matrixRowslen == matrixColumnslen:
     if matrixRowslen == 1:
-        checkNeighboursFor(0,0,[matrix[0][0], matrix[0][0], matrix[0][0], matrix[0][0],
-                                matrix[0][0], matrix[0][0], matrix[0][0], matrix[0][0]])
-        PrintMatrix(matrix)
+        checkNeighboursFor(0, 0, [matrix[0][0], matrix[0][0], matrix[0][0], matrix[0][0],
+                                  matrix[0][0], matrix[0][0], matrix[0][0], matrix[0][0]])
+        PrintMatrix(resultMatrix)
     elif matrixRowslen == 2:
         checkBorders()
         PrintMatrix(resultMatrix)
@@ -277,3 +272,4 @@ else:
         for j in range(1, matrixColumnslen - 1):
             checkPoint(i, j)
     PrintMatrix(resultMatrix)
+
