@@ -139,4 +139,8 @@ time.Add(Time(0, 0, 0, 1010))
 
 print(str(time))
 
+time.Add(Time(0, 0, 0, 1010))
+
+print(str(time))
+
 
