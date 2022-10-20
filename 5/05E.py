@@ -15,8 +15,9 @@ class CardStack:
             sst = list([random.randint(-100, 100) for x in range(val)])
             self.values = sst
             # random.sample(range(-100, 101), val)
-        if isinstance(val, Iterable) and all(isinstance(n, int) for n in val):
+        if isinstance(val, Iterable):
             self.values = list(val)
+            """ and all(isinstance(n, int) for n in val)"""
         """If val is None values is an empty list
          If val is int fills values with val random integers between -100 and 100
          If val is Iterable[int] fills values from val
@@ -26,9 +27,6 @@ class CardStack:
         """Returns a new CardStack instance with shuffled values"""
         values = self.values.copy()
         random.shuffle(values)
-        random.shuffle(values)
-        random.shuffle(values)
-
         return CardStack(values)
 
     def combine(self, other: CardStack) -> CardStack:
@@ -48,6 +46,7 @@ class CardStack:
 
 num = CardStack(5)
 num.add(2)
+print(num.values)
 one = CardStack([1, 2, 3])
 two = CardStack([4, 5, 6, 7])
 print(one.combine(two).values)
