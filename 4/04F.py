@@ -22,11 +22,6 @@ massive = list(map(int, input().split()))
 n, m = list(map(int, input().split()))
 lo = 0
 
+lst = [massive[i:i+m] for i in range(0, count, m)]
+[print(*i) for i in lst]
 
-def manage(lis):
-    global lo
-    lo += m
-    return lis
-
-
-[print(*i) for i in [manage(massive[lo:j + 1]) for j in range(m - 1, count, m)]]
