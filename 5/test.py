@@ -1,5 +1,4 @@
 class Property:
-    "Emulate PyProperty_Type() in Objects/descrobject.c"
 
     def __init__(self, fget=None, fset=None, fdel=None, doc=None):
         self.fget = fget
@@ -48,8 +47,6 @@ class Property:
 
 class Person:
 
-    def __init__(self):
-        self._name = None
 
     @Property
     def name(self) -> str | None:
