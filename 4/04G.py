@@ -8,14 +8,11 @@
 """
 import sys
 
+
 massive = input().split()
-indexesToDel = []
 
-[indexesToDel.append(i) if (massive[i + 1] == "0") else massive[i] for i in range(len(massive) - 1)]
+print(" ".join([x.strip() for i, x in enumerate(massive) if (i not in [i for i in range(len(massive) - 1) if (massive[i + 1] == "0")])]))
 
-resultMassive = [x.strip() for i, x in enumerate(massive) if (i not in indexesToDel)]
-
-print(" ".join(resultMassive))
 
 # for i in range(1, len(massive)):
 #     if massive[i] != "0":

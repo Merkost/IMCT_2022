@@ -11,11 +11,13 @@
 
 n, m = input().split()
 numbers = [int(x) for x in input().split()]
-indexes = [int(x)-1 for x in input().split()]
+indexes = [int(x) - 1 for x in input().split()]
 numbersIndexes = list(map(int, range(0, len(numbers))))
 
-for index in indexes:
-    if index in numbersIndexes:
-        numbers[index] += 1
+# for index in indexes:
+#     if index in numbersIndexes:
+#         numbers[index] += 1
 
+num = [num + 1 if i in indexes else num for i, num in enumerate(numbers)]
+print(*num)
 print(*numbers)
