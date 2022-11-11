@@ -1,11 +1,15 @@
 import numpy as np
 
-print(np.convolve(np.array([1,2,3]), np.ones(3), 'valid'))
+
 def format(value):
     return ('%.3f' % value).rstrip('0').rstrip('.')
 
 def moving_average(x, w):
     return np.convolve(x, np.ones(w), 'valid') / w
+
+def running_mean(x, N):
+    cumsum = np.cumsum(np.insert(x, 0, 0))
+    return (cumsum[N:] - cumsum[:-N]) / float(N)
 
 with open("input.txt", "r") as file:
     n, m = map(int, file.readline().split())
