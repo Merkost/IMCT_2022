@@ -2,25 +2,44 @@ import pandas as pd
 import numpy as np
 
 n, k = [int(i) for i in input().split()]
-data = [input().split() for _ in range(n+1)]
-m = int(input())
-test = [input().split() for _ in range(m)]
-data[0].append("value")
-df = pd.DataFrame(data=data[1:], columns = data[0])  # 1st row as the column names
-print(df)
+ai = {}
+for i in input().split():
+    ai[i] = {}
+# data = [input().split() for _ in range(n)]
+# m = int(input())
+# test = [input().split() for _ in range(m)]
+# data[0].append("value")
+# df = pd.DataFrame(data=data, columns=ai)  # 1st row as the column names
+# print(df)
 
-print(df) overcast
+for i in range(n):
+    row = input().split()
+    class_mark = int(row[-1])
+    for j in range(len(ai.keys())):
+        if row[j] not in ai[list(ai.keys())[j]]:
+            ai[list(ai.keys())[j]][row[j]] = [0, 0]
+        ai[list(ai.keys())[j]][row[j]][class_mark] += 1
 
-for i in range(k):
-    inner_df = pd.DataFrame(columns=["name", "one", "zero"])
-    for value in df[df.columns[0]].unique():
-        inner_df.append([value, df[df.columns[0] == value]])
+total_error = 1.0
+fin_setting = {}
+fin_column = 0
+for i in ai:
+    err_sum = 0
+    temp_setting = {}
+    for j in ai[i]:
+        err_sum += min(ai[i][j])
+        if ai[i][j][0] == ai[i][j][1]:
+            temp_setting[j] = 1
+        else:
+            temp_setting[j] = ai[i][j].index(max(ai[i][j]))
+    if err_sum / n < total_error:
+        total_error = err_sum / n
+        fin_setting = temp_setting
+        fin_column = list(ai.keys()).index(i)
 
-
-
-print(df)
-
-
+for i in range(int(input())):
+    row = input().split()
+    print(fin_setting[row[fin_column]])
 
 """
 
