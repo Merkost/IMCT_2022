@@ -16,7 +16,7 @@ def join_dataframes(data: pd.DataFrame, states: pd.DataFrame) -> pd.DataFrame:
     # return pd.merge(data, states, left_on='State ID', right_on='ID', how='left').drop('State ID', axis=1)
 
 
-states = pd.read_csv('states.csv', index_col='ID')
-data = pd.read_csv('data.csv', index_col='ID')
+states = pd.read_csv('02C_states.csv', index_col='ID')
+data = pd.read_csv('02C_data.csv', index_col='ID')
 joined_df = join_dataframes(data, states)
 print(joined_df)
