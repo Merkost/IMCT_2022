@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from collections.abc import Callable
 from typing import Any, Generic, TypeVar
 
@@ -7,8 +8,7 @@ C = TypeVar('C')
 
 class Property(Generic[C]):
 
-    def __init__(self,
-                 getter: Callable[[C], Any] | None = None,
+    def __init__(self, getter: Callable[[C], Any] | None = None,
                  setter: Callable[[C, Any], None] | None = None,
                  deleter: Callable[[C], None] | None = None,
                  doc: str | None = None,
@@ -34,9 +34,12 @@ class Property(Generic[C]):
             doc = getter.__doc__
         self.doc = doc
         if setter is not None:
-            setter(C, default_value)
+            self.fset(C, default_value)
 
         self._name = ''
+
+    def __doc__(self, obj):
+        print(f"Property {self._name} on class Person")
 
     def __set_name__(self, owner, name):
         self._name = name
@@ -71,12 +74,19 @@ class Property(Generic[C]):
         # prop._name = self._name
         # return prop
 
-        # self._getter = getter
-        # return self
+        self._getter = getter
+        return self
 
-        return Property(getter, self.fset, self.fdel, self.doc, self.def_val)
+        # return Property(getter, self._setter, self._deleter, self._doc, self._default_value)
 
-    def setter(self, setter: Callable[[C, Any], None] | None = None, default_value: Any | None = None) -> Property[C] | Callable[[ Callable[[C, Any], None]], Property[C]]:
+    def setter(self, setter: Callable[[C, Any], None] | None = None, default_value: Any | None = None) -> Property[C] | \
+                                                                                                          Callable[[
+                                                                                                                       Callable[
+                                                                                                                           [
+                                                                                                                               C,
+                                                                                                                               Any], None]],
+                                                                                                                   Property[
+                                                                                                                       C]]:
         '''Adds setter to the property
 
         Arguments:
@@ -87,20 +97,22 @@ class Property(Generic[C]):
             If `setter` is None returns a shorthand decorator function with set `default_value`.
             If `setter` is not None returns a copy of Property with updated setter and default_value arguments'''
 
+        # prop = type(self)(self.fget, setter, self.fset, self.__doc__, default_value)
+        # prop._name = self._name
+        # return prop
+
         if setter is not None:
             self.fset = setter
             self.def_val = default_value
             return self
-            # return Property(self.fget, setter, self.fdel, self.doc, default_value)
-        else:
-            def foo():
-                def wrapper(setter: Callable[[C, Any]], default_value: Any | None):
-                    setter(C, default_value)
-                    return Property(self.fget, setter, self.fdel, self.doc, default_value)
+            # return Property(self.getter, setter, self._deleter, self._doc, default_value)
+
+        def foo(default_value):
+            def wrapper(fun, self):
+                setter(C, default_value)
                 return wrapper
 
-            return foo()
-
+        return foo
 
     def deleter(self, deleter: Callable[[C], None]) -> Property:
         '''Adds deleter to the property
@@ -117,6 +129,11 @@ class Property(Generic[C]):
 
 class Person:
 
+    def __init__(self):
+        for method in [i for i in dir(self) if i.startswith('__') is False]:
+            value = None
+            setattr(self, "_" + method, value)
+
     @Property
     def name(self) -> str | None:
         return self._name
@@ -126,12 +143,43 @@ class Person:
         self._name = name
 
 
-
 p1 = Person()
-p1.name
 p2 = Person()
-
 p2.name = 'Petya'
-
 print(p2.name)
 print(p1.name)
+
+
+class Person:
+    def __init__(self):
+        for method in [i for i in dir(self) if i.startswith('__') is False]:
+            value = None
+            setattr(self, "_" + method, value)
+
+    def get_name(self) -> str:
+        '''Getter:
+        Returns the name'''
+        return self._name
+
+    def set_name(self, name: str):
+        '''Setter:
+        Sets the name, must be of type str'''
+        self._name = name
+
+    def delete_name(self):
+        '''Deleter:
+        Sets the name to None'''
+        self._name = None
+
+    name = Property(get_name, set_name, delete_name, 'Name of a person, str', 'Vasya')
+
+
+p = Person()
+Person.name.__doc__
+print(Person.name.__doc__)
+
+print(p.name)
+p.name = 'Petya'
+print(p.name)
+del p.name
+print(p.name)

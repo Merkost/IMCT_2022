@@ -21,7 +21,7 @@ def draw_pdf(data: pd.DataFrame, column: str, bins: Union[int, str] = 10) -> Non
 
 
 
-data = pd.read_csv('data3.csv')
+data = pd.read_csv('03B_data.csv')
 
 plt.figure(figsize=(10, 5))
 plt.rcParams.update({'font.size': 14})

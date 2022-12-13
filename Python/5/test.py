@@ -49,7 +49,7 @@ class Person:
 
 
     @Property
-    def name(self) -> str | None:
+    def name(self) -> str:
         return self._name
 
     @name.setter
