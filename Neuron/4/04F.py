@@ -68,8 +68,8 @@ class Adam:
         beta1 = self.beta1
         beta2 = self.beta2
         x = x0
-        m = x0
-        v = x0
+        m = 0
+        v = 0
         for i in range(max_iter):
             gradient = oracle.gradient(x)
             if np.linalg.norm(gradient) < eps:
